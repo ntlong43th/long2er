@@ -1,99 +1,140 @@
-#include <stdio.h>
+#include<stdio.h>
+#define MAX 100
 
-void NhapMang (int mangA[], int soPhanTuTrongMangA );
-void XuatMang (int mangA[], int soPhanTuTrongMangA );
-void copySoLeCuaMang (int mangA[],int soPhanTuTrongMangA, int mangB[], int *soPhanTuTrongMangB );
-void copySoAmCuaMang (int mangA[], int soPhanTuTrongMangA, int mangC[], int *soPhanTuTrongMangC );
-void copySoHoanHaoCuaMang (int mangA[], int soPhanTuTrongMangA, int mangD[], int *soPhanTuTrongMangD );
-int kiemTraSoHoanHao(int n);
+void NhapMang (int a[MAX][MAX], int D, int C);
+void XuatMang (int a[MAX][MAX],int D, int C);
+int tinhTong (int a[MAX][MAX],int D, int C);
+void inTongTrenCacCot (int a[MAX][MAX],int D, int C);
+void inTongTrenCacHang (int a[MAX][MAX],int D, int C);
+void inCacSoAm (int a[MAX][MAX],int D, int C);
+void soLuongAmTrenCot (int a[MAX][MAX],int D, int C);
+void soLuongAmTrenCot (int a[MAX][MAX],int D, int C);
+int timMaxAm (int a[MAX][MAX], int D, int C);
 
 int main()
 {
-	int mangA[100];
-	int soPhanTuTrongMangA;
-	int mangB[100];
-	int soPhanTuTrongMangB=0;
-	int mangC[100];
-	int soPhanTuTrongMangC=0;
-	int mangD[100];
-	int soPhanTuTrongMangD;
-	int kiemTraSoHoanHao;
-	printf ("nhap so phan tu trong mang a:");
-	scanf ("%d",&soPhanTuTrongMangA);
-	NhapMang (mangA, soPhanTuTrongMangA );
-	printf ("\ncac phan tu trong mang la:");
-	XuatMang ( mangA, soPhanTuTrongMangA );
+	int a[MAX][MAX], D, C;
+	int kiemTraSoHoanHao(int n);
 	
-	copySoLeCuaMang (mangA, soPhanTuTrongMangA, mangB, &soPhanTuTrongMangB );
-	printf ("\ncac so le copy tu mang a la:");
-	XuatMang ( mangB, soPhanTuTrongMangB );
-
-	copySoAmCuaMang (mangA, soPhanTuTrongMangA, mangC,  &soPhanTuTrongMangC );
-	printf ("\ncac so am copy tu mang a la:");
-	XuatMang ( mangC, soPhanTuTrongMangC );
+	printf(" nhap So dong cho mang 2 chieu:");
+	scanf ("%d", &D);
+	printf("\n nhap so cot cho mang 2 chieu:");
+	scanf ("%d", &C);
 	
-	copySoHoanHaoCuaMang (mangA,  soPhanTuTrongMangA, mangD, &soPhanTuTrongMangD );
-	printf ("\nso hoan hao cua mang la :");
-	XuatMang ( mangD, soPhanTuTrongMangD );
-
+	NhapMang ( a, D, C);
+	printf ("\nmang vua nhap la:");
+	XuatMang (a, D, C);
+	
+	int tong=tinhTong (a, D, C);
+	printf ("\ntong cac phan tu trong mang la: %d", tong);
+	
+	printf ("\ntong tren tung cot la:");
+	inTongTrenCacCot ( a, D, C);
+	
+	printf ("\ntong tren tung hang  la:");
+	inTongTrenCacHang (a, D, C);
+	
+	printf ("\nso am trong mang la:") ;
+	inCacSoAm (a, D, C);
+	
+	printf ("\n am tren tung cot la:");
+	soLuongAmTrenCot (a, D,  C);
+	
+	int kqMaxAm=timMaxAm (a, D, C);
+	printf ("\nso am lon nhat trong mang la: %d", kqMaxAm);
+	
 	return 0;
 }
-void NhapMang (int mangA[],int soPhanTuTrongMangA )
-{
-	for (int i=0;i<soPhanTuTrongMangA;i++)
-	{
-		printf ("nhap a[%d]:",i);
-		scanf ("%d",& mangA[i]);
-	}
-	
-}
 
-void XuatMang (int mangA[],int soPhanTuTrongMangA )
+void NhapMang (int a[MAX][MAX], int D, int C)
 {
-	for (int i=0;i<soPhanTuTrongMangA;i++)
-		printf ("\t%d",mangA[i]);
-}
-
-void copySoLeCuaMang (int mangA[], int soPhanTuTrongMangA, int mangB[], int *soPhanTuTrongMangB )
-{
-	for (int i=0;i<soPhanTuTrongMangA;i++)
-		if (mangA[i]%2 != 0)
+	for (int i=0; i<D; i++)
+		for (int j=0; j<C; j++)
 		{
-			mangB[*soPhanTuTrongMangB]=mangA[i];
-			*soPhanTuTrongMangB =*soPhanTuTrongMangB +1;
+			printf("nhap a[%d][%d]:", i, j);
+			scanf("%d", &a[i][j]);
+		}
+}
+
+void XuatMang (int a[MAX][MAX],int D, int C)
+{
+	for (int i=0; i< D; i++)
+		{
+			printf("\n");
+			for (int j=0;j<C; j++)
+			printf ("\t%d", a[i][j]);
+		}
+}
+
+int tinhTong (int a[MAX][MAX],int D, int C)
+{
+	int tong=0;
+		for (int i=0;i<D; i++)
+			for (int j=0;j < C; j++)	
+			{
+				tong+=a[i][j];
+			}	
+	return tong;		
+}
+
+void inTongTrenCacCot (int a[MAX][MAX],int D, int C)
+{
+	for (int j=0;j < C; j++)
+	{
+		int tong =0;
+		for (int i =0; i<D; i++)
+			tong= tong +a[i][j];
+		printf ("\n tong cot %d:%d",j, tong);
+	}
+		
+		
+}
+
+void inTongTrenCacHang (int a[MAX][MAX],int D, int C)
+{
+	for (int i =0; i<D; i++)
+	{
+		int tong =0;
+		for (int j=0;j < C; j++)
+			tong= tong +a[i][j];
+		printf ("\n tong cot %d:%d",i, tong);
+	}		
+}
+
+void inCacSoAm (int a[MAX][MAX],int D, int C)
+{
+	for (int i=0; i<D;i++)
+	{
+		for (int j=0;j < C; j++)
+			if (a[i][j]<0)
+				printf ("\t%d",a[i][j]);
+	}
+}
+
+void soLuongAmTrenCot (int a[MAX][MAX],int D, int C)
+{
+	for (int j=0;j < C; j++)
+	{
+		int  soLuongAm = 0;
+		for (int i =0; i<D; i++)
+			if (a[i][j]<0)
+			soLuongAm= soLuongAm+1;
+		printf ("\n tong cot %d:%d",j,soLuongAm );
+	}
+}
+
+int timMaxAm (int a[MAX][MAX], int D, int C)
+{
+	int kqMaxAm =0;
+	for (int i=0; i<D;i++)
+		for (int j=0;j < C; j++)
+		{
+		
+			if (a[i][j]<0)
+			kqMaxAm=a[i][j];
+			if(kqMaxAm >a[i][j])
+			kqMaxAm=a[i][j];
 			
 		}
+	return kqMaxAm;
 }
-
-void copySoAmCuaMang (int mangA[], int soPhanTuTrongMangA, int mangC[], int *soPhanTuTrongMangC )
-{
-	for (int i=0;i<soPhanTuTrongMangA;i++)
-		if (mangA[i] < 0)
-		{
-			mangC[*soPhanTuTrongMangC]=mangA[i];
-			*soPhanTuTrongMangC=*soPhanTuTrongMangC+1;
-		}
-}
-
-void copySoHoanHaoCuaMang (int mangA[], int soPhanTuTrongMangA, int mangD[], int *soPhanTuTrongMangD)
-{
-
-	for (int i=0;i<soPhanTuTrongMangA;i++)
-	 	if (kiemTraSoHoanHao(mangA[i]) == 1)
-	 	{
-	 		mangD[*soPhanTuTrongMangD] = mangA[i];
-	 		*soPhanTuTrongMangD = *soPhanTuTrongMangD +1;
-		}
-		 
-}
-int kiemTraSoHoanHao(int n)
- {
- 	int tongCacUoc = 0;
- 	for (int i=1; i<n; i++)
- 		if (n % i == 0)
- 			tongCacUoc = tongCacUoc+i;
- 	if ( tongCacUoc == n)
- 		return 1;
- 	else
-	 	return 0;	
- }

@@ -138,4 +138,3 @@ int timMaxAm (int a[MAX][MAX], int D, int C)
 		}
 	return kqMaxAm;
 }
-
